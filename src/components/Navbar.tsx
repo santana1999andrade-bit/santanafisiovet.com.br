@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DOCTOR_INFO } from '../data/veterinaryData';
 import { Phone, MessageCircle, Menu, X, Shield } from 'lucide-react';
-import pinscherLogo from '../assets/images/pinscher_logo_silhouette_1788493652850.jpg';
+import pinscherLogo from '../assets/images/Gemini_Generated_Image_6aqzqm6aqzqm6aqz.jpg';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);

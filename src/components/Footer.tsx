@@ -1,7 +1,7 @@
 import React from 'react';
 import { DOCTOR_INFO } from '../data/veterinaryData';
 import { Phone, Mail, Instagram, MapPin, Shield, Clock, ArrowUp } from 'lucide-react';
-import pinscherLogo from '../assets/images/pinscher_logo_silhouette_1788493652850.jpg';
+import pinscherLogo from '../assets/images/Gemini_Generated_Image_6aqzqm6aqzqm6aqz.jpg';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
