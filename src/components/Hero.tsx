@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { DOCTOR_INFO } from '../data/veterinaryData';
+import { useSiteData } from '../context/SiteDataContext';
 import { MessageCircle, ShieldCheck, Home, Heart, Award, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export const Hero: React.FC = () => {
+  const { siteData } = useSiteData();
+  const { doctorInfo, hero } = siteData;
   const [selectedQuickNeed, setSelectedQuickNeed] = useState<string>('Hérnia de disco');
 
   const quickNeeds = [
@@ -15,9 +17,9 @@ export const Hero: React.FC = () => {
 
   const buildWhatsappUrl = (need: string) => {
     const text = encodeURIComponent(
-      `Olá Dra. Gabriela Sant'Ana! Vi o site e gostaria de agendar uma avaliação domiciliar para meu pet com foco em: ${need}. Poderia me orientar sobre dias e horários em minha região?`
+      `Olá ${doctorInfo.name}! Vi o site e gostaria de agendar uma avaliação domiciliar para meu pet com foco em: ${need}. Poderia me orientar sobre dias e horários em minha região?`
     );
-    return `https://wa.me/${DOCTOR_INFO.whatsappNumber}?text=${text}`;
+    return `https://wa.me/${doctorInfo.whatsappNumber}?text=${text}`;
   };
 
   return (
@@ -36,22 +38,22 @@ export const Hero: React.FC = () => {
             {/* Trust Pill matching Vibrant Palette */}
             <div className="flex flex-wrap items-center gap-2">
               <div className="inline-block bg-orange-100 text-orange-700 text-xs font-bold px-3.5 py-1.5 rounded-full border border-orange-200 shadow-xs whitespace-nowrap">
-                ATENDIMENTO 100% DOMICILIAR
+                {hero.badge}
               </div>
               <div className="inline-flex items-center gap-1.5 text-xs font-bold bg-stone-100 text-stone-600 px-3 py-1.5 rounded-full border border-stone-200 whitespace-nowrap">
                 <ShieldCheck className="w-3.5 h-3.5 text-orange-500" />
-                <span>{DOCTOR_INFO.crmv}</span>
+                <span>{doctorInfo.crmv}</span>
               </div>
             </div>
 
             {/* H1 Primary SEO Title */}
             <h1
               id="hero-title"
-              className="text-2xl sm:text-4xl md:text-5xl lg:text-[46px] font-extrabold leading-tight text-stone-900 tracking-tight"
+              className="text-2xl sm:text-4xl md:text-5xl lg:text-[44px] font-extrabold leading-tight text-stone-900 tracking-tight"
             >
-              Fisioterapia e Reabilitação{' '}
-              <span className="text-orange-500">Veterinária Domiciliar</span>{' '}
-              em Guarulhos e São Paulo
+              {hero.title}{' '}
+              <span className="text-orange-500">{hero.titleHighlight}</span>{' '}
+              {hero.titleLocations}
             </h1>
 
             {/* Subtitle */}
@@ -59,7 +61,7 @@ export const Hero: React.FC = () => {
               id="hero-subtitle"
               className="text-sm sm:text-base md:text-lg text-stone-600 leading-relaxed max-w-2xl font-normal"
             >
-              O cuidado especializado que seu pet precisa, com o conforto e o respeito ao tempo dele, direto na sua casa em Guarulhos e São Paulo. Sem o estresse de transporte e com equipamentos portáteis de ponta.
+              {hero.subtitle}
             </p>
 
             {/* Quick Consultation Selector */}
@@ -175,8 +177,8 @@ export const Hero: React.FC = () => {
               <div className="relative bg-white p-3.5 sm:p-4 rounded-3xl shadow-xl border border-stone-100 overflow-hidden">
                 <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden bg-stone-100">
                   <img
-                    src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=1000&q=80"
-                    alt="Atendimento de Fisioterapia e Reabilitação Veterinária Domiciliar"
+                    src={hero.imageUrl}
+                    alt={doctorInfo.name}
                     className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
                     loading="eager"
                   />
@@ -186,10 +188,10 @@ export const Hero: React.FC = () => {
                   <div className="absolute bottom-2.5 left-2.5 right-2.5 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-white/60 shadow-md flex items-center justify-between gap-2">
                     <div className="min-w-0">
                       <span className="text-xs font-extrabold text-stone-900 block truncate">
-                        Dra. Gabriela Sant'Ana
+                        {doctorInfo.name}
                       </span>
                       <span className="text-[10px] sm:text-[11px] text-stone-500 font-medium block truncate">
-                        Médica Veterinária • CRMV/SP 60.401
+                        Médica Veterinária • {doctorInfo.crmv}
                       </span>
                     </div>
                     <span className="px-2 py-1 rounded-xl bg-orange-100 text-orange-700 text-[10px] font-bold whitespace-nowrap shrink-0">
@@ -202,7 +204,7 @@ export const Hero: React.FC = () => {
                 <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                   <div className="p-2.5 sm:p-3 rounded-2xl bg-[#FDFBF7] border border-stone-200">
                     <span className="text-sm sm:text-base font-extrabold text-orange-600 block leading-none">
-                      5.0 ★★★★★
+                      {hero.statReviews}
                     </span>
                     <span className="text-[10px] sm:text-[11px] text-stone-500 font-medium mt-1 block">
                       Google Reviews
@@ -210,7 +212,7 @@ export const Hero: React.FC = () => {
                   </div>
                   <div className="p-2.5 sm:p-3 rounded-2xl bg-[#FDFBF7] border border-stone-200">
                     <span className="text-sm sm:text-base font-extrabold text-stone-900 block leading-none">
-                      Guarulhos & SP
+                      {hero.statLocations}
                     </span>
                     <span className="text-[10px] sm:text-[11px] text-stone-500 font-medium mt-1 block">
                       Rotas Domiciliares

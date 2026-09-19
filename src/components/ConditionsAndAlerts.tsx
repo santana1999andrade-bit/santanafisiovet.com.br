@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { TREATED_CONDITIONS, ALERT_SYMPTOMS, DOCTOR_INFO } from '../data/veterinaryData';
+import { useSiteData } from '../context/SiteDataContext';
+import { TREATED_CONDITIONS, ALERT_SYMPTOMS } from '../data/veterinaryData';
 import { ShieldAlert, Bone, Stethoscope, Activity, Layers, HeartPulse, CheckSquare, Square, AlertCircle, MessageCircle, ArrowRight } from 'lucide-react';
 
 export const ConditionsAndAlerts: React.FC = () => {
+  const { siteData } = useSiteData();
+  const { doctorInfo } = siteData;
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
 
   const toggleSymptom = (id: string) => {
@@ -33,9 +36,9 @@ export const ConditionsAndAlerts: React.FC = () => {
   const buildSymptomWhatsappUrl = () => {
     if (selectedSymptoms.length === 0) {
       const text = encodeURIComponent(
-        "Olá Dra. Gabriela! Gostaria de relatar os sintomas que meu pet está apresentando e agendar uma avaliação domiciliar."
+        `Olá ${doctorInfo.name}! Gostaria de relatar os sintomas que meu pet está apresentando e agendar uma avaliação domiciliar.`
       );
-      return `https://wa.me/${DOCTOR_INFO.whatsappNumber}?text=${text}`;
+      return `https://wa.me/${doctorInfo.whatsappNumber}?text=${text}`;
     }
 
     const symptomLabels = ALERT_SYMPTOMS.filter((s) =>
@@ -45,9 +48,9 @@ export const ConditionsAndAlerts: React.FC = () => {
       .join('\n');
 
     const text = encodeURIComponent(
-      `Olá Dra. Gabriela! Fiz o teste no site e notei os seguintes sinais de alerta no meu pet:\n\n${symptomLabels}\n\nGostaria de entender se é caso de fisioterapia domiciliar e como podemos agendar a avaliação.`
+      `Olá ${doctorInfo.name}! Fiz o teste no site e notei os seguintes sinais de alerta no meu pet:\n\n${symptomLabels}\n\nGostaria de entender se é caso de fisioterapia domiciliar e como podemos agendar a avaliação.`
     );
-    return `https://wa.me/${DOCTOR_INFO.whatsappNumber}?text=${text}`;
+    return `https://wa.me/${doctorInfo.whatsappNumber}?text=${text}`;
   };
 
   return (

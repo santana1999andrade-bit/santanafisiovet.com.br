@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { FAQS, DOCTOR_INFO } from '../data/veterinaryData';
+import { useSiteData } from '../context/SiteDataContext';
+import { FAQS } from '../data/veterinaryData';
 import { ChevronDown, HelpCircle, MessageCircle } from 'lucide-react';
 
 export const FaqSection: React.FC = () => {
+  const { siteData } = useSiteData();
+  const { faqs, doctorInfo } = siteData;
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const faqList = (faqs && Array.isArray(faqs) && faqs.length > 0) ? faqs : FAQS;
 
   const toggleIndex = (idx: number) => {
     setOpenIndex(openIndex === idx ? null : idx);
@@ -28,7 +33,7 @@ export const FaqSection: React.FC = () => {
 
         {/* Accordion list */}
         <div className="space-y-4">
-          {FAQS.map((faq, idx) => {
+          {faqList.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
@@ -81,8 +86,8 @@ export const FaqSection: React.FC = () => {
           <div className="pt-2">
             <a
               id="btn-faq-whatsapp-direct"
-              href={`https://wa.me/${DOCTOR_INFO.whatsappNumber}?text=${encodeURIComponent(
-                "Olá Dra. Gabriela! Tenho uma dúvida sobre o tratamento fisioterapêutico para meu animal."
+              href={`https://wa.me/${doctorInfo.whatsappNumber}?text=${encodeURIComponent(
+                `Olá ${doctorInfo.name}! Tenho uma dúvida sobre o tratamento fisioterapêutico para meu animal.`
               )}`}
               target="_blank"
               rel="noopener noreferrer"

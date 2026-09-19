@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { MODALITIES, DOCTOR_INFO } from '../data/veterinaryData';
+import { useSiteData } from '../context/SiteDataContext';
 import { TherapyModality } from '../types';
 import { Zap, Sparkles, Activity, Waves, HeartHandshake, Cpu, CheckCircle2, ArrowUpRight, MessageCircle, X } from 'lucide-react';
 
 export const ModalitiesSection: React.FC = () => {
+  const { siteData } = useSiteData();
+  const { modalities, doctorInfo } = siteData;
   const [selectedModality, setSelectedModality] = useState<TherapyModality | null>(null);
 
   const getIcon = (name: string) => {
@@ -27,9 +29,9 @@ export const ModalitiesSection: React.FC = () => {
 
   const getWhatsappUrlForModality = (modalityName: string) => {
     const text = encodeURIComponent(
-      `Olá Dra. Gabriela! Gostaria de saber mais sobre a sessão domiciliar de ${modalityName} para meu pet. Como funciona a avaliação?`
+      `Olá ${doctorInfo.name}! Gostaria de saber mais sobre a sessão domiciliar de ${modalityName} para meu pet. Como funciona a avaliação?`
     );
-    return `https://wa.me/${DOCTOR_INFO.whatsappNumber}?text=${text}`;
+    return `https://wa.me/${doctorInfo.whatsappNumber}?text=${text}`;
   };
 
   return (
@@ -50,7 +52,7 @@ export const ModalitiesSection: React.FC = () => {
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {MODALITIES.map((modality) => (
+          {(modalities || []).map((modality) => (
             <div
               key={modality.id}
               id={`card-modality-${modality.id}`}
@@ -90,7 +92,7 @@ export const ModalitiesSection: React.FC = () => {
                       Principais Indicações:
                     </span>
                     <ul className="space-y-1.5">
-                      {modality.indications.slice(0, 3).map((ind, i) => (
+                      {(modality.indications || []).slice(0, 3).map((ind, i) => (
                         <li key={i} className="text-xs text-stone-600 flex items-start gap-1.5">
                           <CheckCircle2 className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" />
                           <span>{ind}</span>
@@ -142,8 +144,8 @@ export const ModalitiesSection: React.FC = () => {
           </div>
           <a
             id="btn-modalities-general-whatsapp"
-            href={`https://wa.me/${DOCTOR_INFO.whatsappNumber}?text=${encodeURIComponent(
-              "Olá Dra. Gabriela! Gostaria de agendar uma avaliação domiciliar para entender o tratamento mais indicado para meu pet."
+            href={`https://wa.me/${doctorInfo.whatsappNumber}?text=${encodeURIComponent(
+              `Olá ${doctorInfo.name}! Gostaria de agendar uma avaliação domiciliar para entender o tratamento mais indicado para meu pet.`
             )}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -209,7 +211,7 @@ export const ModalitiesSection: React.FC = () => {
                 Indicações Terapêuticas:
               </h4>
               <ul className="space-y-1.5">
-                {selectedModality.indications.map((ind, i) => (
+                {(selectedModality.indications || []).map((ind, i) => (
                   <li key={i} className="text-xs sm:text-sm text-stone-600 flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
                     <span>{ind}</span>

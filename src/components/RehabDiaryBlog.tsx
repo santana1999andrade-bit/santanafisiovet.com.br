@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { BLOG_POSTS, DOCTOR_INFO } from '../data/veterinaryData';
+import { useSiteData } from '../context/SiteDataContext';
 import { BlogPost } from '../types';
 import { BookOpen, Calendar, Clock, ArrowRight, X, Share2, MessageCircle } from 'lucide-react';
 
 export const RehabDiaryBlog: React.FC = () => {
-  const [posts] = useState<BlogPost[]>(BLOG_POSTS);
+  const { siteData } = useSiteData();
+  const posts = siteData.blogPosts;
+  const { doctorInfo } = siteData;
   const [activeCategory, setActiveCategory] = useState<string>('Todos');
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
@@ -53,7 +55,7 @@ export const RehabDiaryBlog: React.FC = () => {
 
         {/* Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredPosts.map((post) => (
+          {(filteredPosts || []).map((post) => (
             <article
               key={post.id}
               id={`blog-post-${post.id}`}
@@ -153,7 +155,7 @@ export const RehabDiaryBlog: React.FC = () => {
             </div>
 
             <div className="space-y-4 text-sm text-stone-600 leading-relaxed">
-              {selectedPost.content.map((paragraph, idx) => (
+              {(Array.isArray(selectedPost.content) ? selectedPost.content : [selectedPost.content]).map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
             </div>
@@ -164,8 +166,8 @@ export const RehabDiaryBlog: React.FC = () => {
               </span>
               <a
                 id="btn-post-consult-whatsapp"
-                href={`https://wa.me/${DOCTOR_INFO.whatsappNumber}?text=${encodeURIComponent(
-                  `Olá Dra. Gabriela! Li o artigo "${selectedPost.title}" no seu site e gostaria de agendar uma consulta para meu pet.`
+                href={`https://wa.me/${doctorInfo.whatsappNumber}?text=${encodeURIComponent(
+                  `Olá ${doctorInfo.name}! Li o artigo "${selectedPost.title}" no seu site e gostaria de agendar uma consulta para meu pet.`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

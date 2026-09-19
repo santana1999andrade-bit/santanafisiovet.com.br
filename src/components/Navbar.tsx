@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { DOCTOR_INFO } from '../data/veterinaryData';
-import { Phone, MessageCircle, Menu, X, Shield } from 'lucide-react';
+import { useSiteData } from '../context/SiteDataContext';
+import { Phone, MessageCircle, Menu, X, Shield, Lock } from 'lucide-react';
 import pinscherLogo from '../assets/images/Gemini_Generated_Image_6aqzqm6aqzqm6aqz.jpg';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  onOpenAdmin?: () => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onOpenAdmin }) => {
+  const { siteData } = useSiteData();
+  const { doctorInfo } = siteData;
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -31,9 +37,9 @@ export const Navbar: React.FC = () => {
   };
 
   const whatsappMessage = encodeURIComponent(
-    "Olá Dra. Gabriela! Gostaria de tirar dúvidas e agendar uma avaliação domiciliar para meu pet."
+    `Olá ${doctorInfo.name}! Gostaria de tirar dúvidas e agendar uma avaliação domiciliar para meu pet.`
   );
-  const whatsappUrl = `https://wa.me/${DOCTOR_INFO.whatsappNumber}?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/${doctorInfo.whatsappNumber}?text=${whatsappMessage}`;
 
   return (
     <header
@@ -87,10 +93,10 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center gap-2 sm:gap-3">
           {/* CRMV Badge (Desktop only) */}
           <div className="hidden xl:inline-block text-xs font-bold bg-stone-100 px-3 py-1.5 rounded-full text-stone-500 border border-stone-200">
-            {DOCTOR_INFO.crmv}
+            {doctorInfo.crmv}
           </div>
 
-          {/* Quick WhatsApp Primary CTA - Desktop Only, to prevent mobile clutter */}
+          {/* Quick WhatsApp Primary CTA */}
           <a
             id="nav-cta-whatsapp"
             href={whatsappUrl}
@@ -102,7 +108,7 @@ export const Navbar: React.FC = () => {
             <span>Falar com a Dra.</span>
           </a>
 
-          {/* Mobile Menu Toggle - Clean, accessible 44px touch target */}
+          {/* Mobile Menu Toggle */}
           <button
             id="btn-mobile-menu-toggle"
             type="button"
@@ -127,7 +133,7 @@ export const Navbar: React.FC = () => {
             </span>
             <div className="flex items-center gap-1 text-[11px] font-semibold text-orange-700 bg-orange-100 px-2.5 py-1 rounded-full">
               <Shield className="w-3 h-3 text-orange-600" />
-              <span>{DOCTOR_INFO.crmv}</span>
+              <span>{doctorInfo.crmv}</span>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-2">
@@ -147,12 +153,25 @@ export const Navbar: React.FC = () => {
           <div className="mt-4 pt-3 border-t border-stone-100 flex flex-col gap-2">
             <a
               id="mobile-call-phone"
-              href={`tel:${DOCTOR_INFO.whatsappNumber}`}
+              href={`tel:${doctorInfo.whatsappNumber}`}
               className="flex items-center justify-center gap-2 w-full py-2.5 text-sm font-semibold text-stone-800 bg-[#FDFBF7] border border-stone-200 rounded-2xl hover:bg-orange-50 transition-colors min-h-[48px]"
             >
               <Phone className="w-4 h-4 text-orange-500" />
-              <span>Ligar: {DOCTOR_INFO.whatsappFormatted}</span>
+              <span>Ligar: {doctorInfo.whatsappFormatted}</span>
             </a>
+            {onOpenAdmin && (
+              <button
+                type="button"
+                onClick={() => {
+                  handleLinkClick();
+                  onOpenAdmin();
+                }}
+                className="flex items-center justify-center gap-2 w-full py-2 text-xs font-semibold text-stone-500 hover:text-orange-600 transition-colors"
+              >
+                <Lock className="w-3.5 h-3.5" />
+                <span>Painel Administrativo</span>
+              </button>
+            )}
           </div>
         </div>
       )}

@@ -53,4 +53,68 @@ export interface CoverageRegion {
   city: string;
   neighborhoods: string[];
   badge: string;
+  description?: string;
+}
+
+export interface DoctorInfo {
+  name: string;
+  crmv: string;
+  specialties: string;
+  whatsappNumber: string;
+  whatsappFormatted: string;
+  instagram: string;
+  instagramUrl: string;
+  email: string;
+  quote: string;
+  bio: string;
+  serviceType: string;
+  locationsShort: string;
+}
+
+export interface HeroContent {
+  badge: string;
+  title: string;
+  titleHighlight: string;
+  titleLocations: string;
+  subtitle: string;
+  imageUrl: string;
+  statReviews: string;
+  statLocations: string;
+}
+
+export interface AboutContent {
+  title: string;
+  specialties: string;
+  imageUrl: string;
+  quote: string;
+  bio: string;
+}
+
+export interface GoogleIntegrationConfig {
+  enabled: boolean;
+  businessName: string;
+  placeId: string;
+  googleMapsUrl: string;
+  googleReviewUrl: string;
+  rating: number;
+  totalReviews: number;
+  lastSyncedAt: string;
+  embedWidgetCode?: string;
+}
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface SiteData {
+  doctorInfo: DoctorInfo;
+  hero: HeroContent;
+  about: AboutContent;
+  coverageRegions: CoverageRegion[];
+  reviews: ReviewItem[];
+  modalities: TherapyModality[];
+  blogPosts: BlogPost[];
+  googleIntegration: GoogleIntegrationConfig;
+  faqs: FAQItem[];
 }

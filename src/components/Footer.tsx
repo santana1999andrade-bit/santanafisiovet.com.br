@@ -1,9 +1,16 @@
 import React from 'react';
-import { DOCTOR_INFO } from '../data/veterinaryData';
-import { Phone, Mail, Instagram, MapPin, Shield, Clock, ArrowUp } from 'lucide-react';
+import { useSiteData } from '../context/SiteDataContext';
+import { Phone, Mail, Instagram, MapPin, Shield, Clock, ArrowUp, Lock, Star } from 'lucide-react';
 import pinscherLogo from '../assets/images/Gemini_Generated_Image_6aqzqm6aqzqm6aqz.jpg';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenAdmin?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
+  const { siteData } = useSiteData();
+  const { doctorInfo, googleIntegration } = siteData;
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -34,7 +41,7 @@ export const Footer: React.FC = () => {
 
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-xs text-orange-400 font-bold">
               <Shield className="w-3.5 h-3.5" />
-              <span>{DOCTOR_INFO.crmv}</span>
+              <span>{doctorInfo.crmv}</span>
             </div>
           </div>
 
@@ -47,40 +54,52 @@ export const Footer: React.FC = () => {
               <li>
                 <a
                   id="footer-link-whatsapp"
-                  href={`https://wa.me/${DOCTOR_INFO.whatsappNumber}`}
+                  href={`https://wa.me/${doctorInfo.whatsappNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2.5 hover:text-orange-400 transition-colors"
                 >
                   <Phone className="w-4 h-4 text-orange-500 shrink-0" />
-                  <span>WhatsApp: {DOCTOR_INFO.whatsappFormatted}</span>
+                  <span>WhatsApp: {doctorInfo.whatsappFormatted}</span>
                 </a>
               </li>
               <li>
                 <a
                   id="footer-link-instagram"
-                  href={DOCTOR_INFO.instagramUrl}
+                  href={doctorInfo.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2.5 hover:text-orange-400 transition-colors"
                 >
                   <Instagram className="w-4 h-4 text-orange-500 shrink-0" />
-                  <span>Instagram: {DOCTOR_INFO.instagram}</span>
+                  <span>Instagram: {doctorInfo.instagram}</span>
                 </a>
               </li>
               <li>
                 <a
                   id="footer-link-email"
-                  href={`mailto:${DOCTOR_INFO.email}`}
+                  href={`mailto:${doctorInfo.email}`}
                   className="flex items-center gap-2.5 hover:text-orange-400 transition-colors"
                 >
                   <Mail className="w-4 h-4 text-orange-500 shrink-0" />
-                  <span>{DOCTOR_INFO.email}</span>
+                  <span>{doctorInfo.email}</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  id="footer-link-google-maps"
+                  href={googleIntegration?.googleMapsUrl || 'https://share.google/iOCFqF29KqiwEHT8S'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 text-amber-400 hover:text-amber-300 transition-colors"
+                >
+                  <Star className="w-4 h-4 fill-amber-400 text-amber-400 shrink-0" />
+                  <span>Perfil no Google Maps (5.0 ★)</span>
                 </a>
               </li>
               <li className="flex items-start gap-2.5 text-stone-400 pt-1">
                 <MapPin className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
-                <span>Atendimento 100% Domiciliar em Guarulhos, São Paulo, Arujá e Itaquaquecetuba.</span>
+                <span>Atendimento 100% Domiciliar: Grande São Paulo, Guarulhos e Cidade de São Paulo.</span>
               </li>
             </ul>
           </div>
@@ -140,14 +159,22 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Ethical disclaimer & Copyright */}
+        {/* Ethical disclaimer & Copyright & Admin link */}
         <div className="pt-8 border-t border-stone-900 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-stone-500 text-center md:text-left">
           <p>
-            © {new Date().getFullYear()} Sant'Ana Fisioterapia & Reabilitação Veterinária • Dra. Gabriela Sant'Ana ({DOCTOR_INFO.crmv}). Todos os direitos reservados.
+            © {new Date().getFullYear()} Sant'Ana Fisioterapia & Reabilitação Veterinária • {doctorInfo.name} ({doctorInfo.crmv}). Todos os direitos reservados.
           </p>
-          <p className="max-w-md">
-            Conteúdo informativo em conformidade com o Código de Ética do Médico Veterinário (CFMV/CRMV-SP). Não substitui a consulta presencial.
-          </p>
+
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              onClick={onOpenAdmin ? onOpenAdmin : () => { window.location.hash = 'admin'; }}
+              className="inline-flex items-center gap-1.5 text-stone-500 hover:text-orange-400 transition-colors text-[11px]"
+            >
+              <Lock className="w-3 h-3" />
+              <span>Área Administrativa</span>
+            </button>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,9 +1,12 @@
 import React from 'react';
-import { DOCTOR_INFO } from '../data/veterinaryData';
+import { useSiteData } from '../context/SiteDataContext';
 
 export const WhatsAppFloat: React.FC = () => {
+  const { siteData } = useSiteData();
+  const { doctorInfo } = siteData;
+
   const defaultMsg = encodeURIComponent(
-    "Olá Dra. Gabriela! Gostaria de tirar dúvidas e agendar uma avaliação domiciliar para meu pet."
+    `Olá ${doctorInfo.name}! Gostaria de tirar dúvidas e agendar uma avaliação domiciliar para meu pet.`
   );
 
   return (
@@ -20,10 +23,10 @@ export const WhatsAppFloat: React.FC = () => {
       {/* Primary Floating Button */}
       <a
         id="btn-whatsapp-floating"
-        href={`https://wa.me/${DOCTOR_INFO.whatsappNumber}?text=${defaultMsg}`}
+        href={`https://wa.me/${doctorInfo.whatsappNumber}?text=${defaultMsg}`}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Falar com a Dra. Gabriela no WhatsApp"
+        aria-label={`Falar com ${doctorInfo.name} no WhatsApp`}
         className="group relative flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white shadow-lg shadow-[#25D366]/30 hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-[#25D366]/30 min-w-[48px] min-h-[48px]"
       >
         {/* WhatsApp Icon */}

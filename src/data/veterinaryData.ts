@@ -1,6 +1,6 @@
-import { TherapyModality, TreatedCondition, AlertSymptom, ReviewItem, BlogPost, CoverageRegion } from '../types';
+import { TherapyModality, TreatedCondition, AlertSymptom, ReviewItem, BlogPost, CoverageRegion, DoctorInfo, HeroContent, AboutContent, SiteData, GoogleIntegrationConfig } from '../types';
 
-export const DOCTOR_INFO = {
+export const DOCTOR_INFO: DoctorInfo = {
   name: "Dra. Gabriela Sant'Ana",
   crmv: "CRMV/SP 60.401",
   specialties: "Fisioterapia, Reabilitação Animal e Acupuntura Veterinária",
@@ -11,7 +11,27 @@ export const DOCTOR_INFO = {
   email: "contato@santanafisiovet.com.br",
   quote: "Cada paciente possui seu tempo e sua necessidade. O tratamento é desenhado estritamente para o bem-estar e alívio da dor do seu pet.",
   bio: "Médica Veterinária dedicada exclusivamente à Fisiatria, Reabilitação Física e Acupuntura Domiciliar. Atuamos com base em evidências científicas e conduta ética, eliminando o estresse do deslocamento para que o animal seja atendido no ambiente onde ele se sente mais seguro e confiante: o próprio lar.",
-  serviceType: "Atendimento 100% Domiciliar"
+  serviceType: "Atendimento 100% Domiciliar",
+  locationsShort: "Grande São Paulo, Guarulhos e Cidade de São Paulo"
+};
+
+export const INITIAL_HERO: HeroContent = {
+  badge: "ATENDIMENTO 100% DOMICILIAR",
+  title: "Fisioterapia e Reabilitação",
+  titleHighlight: "Veterinária Domiciliar",
+  titleLocations: "em Grande São Paulo, Guarulhos e Cidade de São Paulo",
+  subtitle: "O cuidado especializado que seu pet precisa, com o conforto e o respeito ao tempo dele, direto na sua casa em Grande São Paulo, Guarulhos e Cidade de São Paulo. Sem o estresse de transporte e com equipamentos portáteis de ponta.",
+  imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=1000&q=80",
+  statReviews: "5.0 ★★★★★",
+  statLocations: "Grande SP, Guarulhos & SP"
+};
+
+export const INITIAL_ABOUT: AboutContent = {
+  title: "Dra. Gabriela Sant'Ana",
+  specialties: "Fisioterapia, Reabilitação Animal e Acupuntura Veterinária",
+  imageUrl: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=900&q=80",
+  quote: "Cada paciente possui seu tempo e sua necessidade. O tratamento é desenhado estritamente para o bem-estar e alívio da dor do seu pet.",
+  bio: "Médica Veterinária dedicada exclusivamente à Fisiatria, Reabilitação Física e Acupuntura Domiciliar. Atuamos com base em evidências científicas e conduta ética, eliminando o estresse do deslocamento para que o animal seja atendido no ambiente onde ele se sente mais seguro e confiante: o próprio lar."
 };
 
 export const MODALITIES: TherapyModality[] = [
@@ -311,69 +331,42 @@ export const BLOG_POSTS: BlogPost[] = [
 
 export const COVERAGE_REGIONS: CoverageRegion[] = [
   {
-    city: "Guarulhos (Atendimento Prioritário)",
-    badge: "Sede Principal",
+    city: "Guarulhos",
+    badge: "Atendimento Domiciliar",
+    description: "Atendimento no conforto e tranquilidade do próprio lar, sem o estresse de deslocamento.",
     neighborhoods: [
-      "Bosque Maia",
-      "Vila Augusta",
-      "Centro de Guarulhos",
-      "Maia",
-      "Picanço",
-      "Gopouva",
-      "Bomba Grande",
-      "Jardim Flor da Montanha",
-      "Macedo",
-      "Parque Cecap",
-      "Cumbica",
-      "Jardim Paraventi",
-      "Vila Galvão",
-      "Torres Tibagy",
-      "Continental"
+      "Atendimento Domiciliar em toda a cidade de Guarulhos"
     ]
   },
   {
-    city: "São Paulo - Zona Norte & Centro-Norte",
-    badge: "Rota Diária",
+    city: "Cidade de São Paulo",
+    badge: "Atendimento Domiciliar",
+    description: "Rotas programadas para atendimento domiciliar especializado no conforto da sua residência.",
     neighborhoods: [
-      "Tucuruvi",
-      "Santana",
-      "Jardim São Paulo",
-      "Parada Inglesa",
-      "Mandaqui",
-      "Tremembé",
-      "Serra da Cantareira",
-      "Casa Verde",
-      "Vila Guilherme",
-      "Vila Maria"
+      "Atendimento Domiciliar em todas as regiões da capital"
     ]
   },
   {
-    city: "São Paulo - Zona Oeste, Sul & Alphaville",
-    badge: "Atendimento com Agendamento",
+    city: "Grande São Paulo",
+    badge: "Atendimento Domiciliar",
+    description: "Deslocamento planejado com rotas sob agendamento para máximo bem-estar e recuperação do seu pet.",
     neighborhoods: [
-      "Alphaville / Barueri",
-      "Tamboré",
-      "Morumbi",
-      "Pinheiros",
-      "Itaim Bibi",
-      "Moema",
-      "Perdizes",
-      "Vila Madalena",
-      "Jardins",
-      "Alto de Pinheiros"
-    ]
-  },
-  {
-    city: "Alto Tietê & Região Metropolitana",
-    badge: "Sob Consulta de Rota",
-    neighborhoods: [
-      "Arujá (Centro e Condomínios)",
-      "Itaquaquecetuba",
-      "Mogi das Cruzes (Consulte)",
-      "Poá e Suzano (Consulte)"
+      "Região metropolitana sob agendamento prévio de rota"
     ]
   }
 ];
+
+export const INITIAL_GOOGLE_INTEGRATION: GoogleIntegrationConfig = {
+  enabled: true,
+  businessName: "Sant'Ana Fisioterapia & Reabilitação Veterinária",
+  placeId: "ChIJ_santana_fisiovet_sp",
+  googleMapsUrl: "https://share.google/iOCFqF29KqiwEHT8S",
+  googleReviewUrl: "https://share.google/iOCFqF29KqiwEHT8S",
+  rating: 5.0,
+  totalReviews: 48,
+  lastSyncedAt: "Hoje, em tempo real",
+  embedWidgetCode: "",
+};
 
 export const FAQS = [
   {
@@ -397,3 +390,15 @@ export const FAQS = [
     answer: "Apenas um espaço tranquilo, como uma sala com boa iluminação e onde o pet se sinta à vontade (sem barulho de obras ou outros animais interferindo). A Dra. Gabriela leva colchonete higienizado, aparelhos portáteis, toalhas e materiais de suporte. O tutor pode acompanhar toda a sessão e aprender exercícios para o dia a dia."
   }
 ];
+
+export const INITIAL_SITE_DATA: SiteData = {
+  doctorInfo: DOCTOR_INFO,
+  hero: INITIAL_HERO,
+  about: INITIAL_ABOUT,
+  coverageRegions: COVERAGE_REGIONS,
+  reviews: REVIEWS,
+  modalities: MODALITIES,
+  blogPosts: BLOG_POSTS,
+  googleIntegration: INITIAL_GOOGLE_INTEGRATION,
+  faqs: FAQS,
+};
