@@ -96,6 +96,20 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAdmin }) => {
             {doctorInfo.crmv}
           </div>
 
+          {/* Admin / Login Button */}
+          {onOpenAdmin && (
+            <button
+              id="nav-btn-admin-login"
+              type="button"
+              onClick={onOpenAdmin}
+              title="Acessar Área Administrativa / Login"
+              aria-label="Acessar Área Administrativa"
+              className="hidden sm:inline-flex items-center justify-center p-2.5 rounded-2xl text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors border border-transparent hover:border-stone-200"
+            >
+              <Lock className="w-4 h-4" />
+            </button>
+          )}
+
           {/* Quick WhatsApp Primary CTA */}
           <a
             id="nav-cta-whatsapp"

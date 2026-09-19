@@ -27,10 +27,17 @@ function checkIsAdminRoute(): boolean {
     path === '/admin' ||
     path.endsWith('/admin') ||
     path.endsWith('/admin/') ||
+    path === '/login' ||
+    path.endsWith('/login') ||
+    path.endsWith('/login/') ||
     hash === '#admin' ||
     hash === '#/admin' ||
     hash.startsWith('#admin') ||
-    hash.startsWith('#/admin')
+    hash.startsWith('#/admin') ||
+    hash === '#login' ||
+    hash === '#/login' ||
+    hash.startsWith('#login') ||
+    hash.startsWith('#/login')
   );
 }
 
@@ -100,7 +107,7 @@ export default function App() {
   };
 
   const handleBackToSite = () => {
-    if (window.location.hash.includes('admin')) {
+    if (window.location.hash.includes('admin') || window.location.hash.includes('login')) {
       window.history.pushState(null, '', window.location.pathname);
     }
     setIsAdmin(false);
